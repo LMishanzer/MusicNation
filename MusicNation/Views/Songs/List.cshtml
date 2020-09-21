@@ -1,0 +1,14 @@
+﻿@using MusicNation.Models
+@model List<string>
+
+
+<div class="container">
+    @{
+        foreach (var file in Model)
+        {
+            <div>
+                <p>@file</p>
+            </div>
+        }
+    }
+</div>
