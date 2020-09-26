@@ -9,6 +9,7 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace MusicNation.Models.GoogleDrive
 {
@@ -104,6 +105,15 @@ namespace MusicNation.Models.GoogleDrive
             }
 
             return new OkResult();
+        }
+
+        public async Task<MemoryStream> Download(string id)
+        {
+            var stream = new MemoryStream();
+            
+            await Service.Files.Get(id).DownloadAsync(stream);
+
+            return stream;
         }
     }
 }

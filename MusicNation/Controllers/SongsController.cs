@@ -22,8 +22,16 @@ namespace MusicNation.Controllers
         public ViewResult List()
         {
             var songs = this.songs.GetAllSongs();
-            var files = session.GetFiles();
-            return View(files);
+            return View(songs);
+        }
+
+        public async Task<IActionResult> Download(string button)
+        {
+            var net = new System.Net.WebClient();
+            var content = await session.Download(button);
+            var contentType = "audio/mpeg";
+            var fileName = $"{button}.mp3";
+            return File(content, contentType, fileName);
         }
     }
 }
