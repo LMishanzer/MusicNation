@@ -5,15 +5,17 @@
     @{
         foreach (var song in Model)
         {
-            <div>
+            <div class="col-md-3">
                 <h2>@song.Name</h2>
-                <form>
+                <form enctype="multipart/form-data" method="post">
                     <button name="button" value="@song.IdOnDrive" asp-action="Download">Download</button>
                 </form>
             </div>
         }
     }
-    <div>
-        @TempData["buttonval"]
-    </div>
+</div>
+<div>
+    <form>
+        <button asp-controller="Upload" asp-action="Index">Upload</button>
+    </form>
 </div>

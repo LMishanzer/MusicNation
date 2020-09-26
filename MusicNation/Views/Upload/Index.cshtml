@@ -1,0 +1,15 @@
+﻿@using MusicNation.Models
+@model CreatePost
+
+<div>
+    <form asp-action="Upload" enctype="multipart/form-data">
+
+        <input asp-for="Name" /> <br />
+        <input asp-for="Artist" /> <br />
+        <input asp-for="Album" /> <br />
+        <input asp-for="Year" /> <br />
+        <input asp-for="Song" /> <br />
+
+        <input type="submit" />
+    </form>
+</div>

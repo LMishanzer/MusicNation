@@ -11,6 +11,7 @@ namespace MusicNation.Models
         private static int counter = 0;
 
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         public int AlbumId { get; set; }
         public Album Album { get; set; }

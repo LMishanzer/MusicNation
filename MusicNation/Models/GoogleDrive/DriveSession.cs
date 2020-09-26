@@ -82,27 +82,17 @@ namespace MusicNation.Models.GoogleDrive
             return result;
         }
 
-        public async Task<IActionResult> Upload(IFormFile file)
+        public async Task<IActionResult> Upload(MemoryStream stream, string filename)
         {
-            string filePath = "~/temp/" + file.Name;
-
-            await using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
             var fileMetadata = new Google.Apis.Drive.v3.Data.File();
-            fileMetadata.Name = file.Name;
-            fileMetadata.MimeType = MimeTypes.GetMimeType(filePath);
+            fileMetadata.Name = filename;
+            fileMetadata.MimeType = "audio/mpeg";
 
             FilesResource.CreateMediaUpload request;
 
-            await using (var stream = new FileStream(filePath, FileMode.Open))
-            {
-                request = Service.Files.Create(fileMetadata, stream, fileMetadata.MimeType);
-                request.Fields = "id";
-                await request.UploadAsync();
-            }
+            request = Service.Files.Create(fileMetadata, stream, fileMetadata.MimeType);
+            request.Fields = "id";
+            await request.UploadAsync();
 
             return new OkResult();
         }

@@ -31,7 +31,11 @@ namespace MusicNation.Controllers
             var content = await session.Download(button);
             var contentType = "audio/mpeg";
             var fileName = $"{button}.mp3";
-            return File(content, contentType, fileName);
+
+            var file = File(content, contentType, fileName);
+            content.Close();
+
+            return file;
         }
     }
 }
