@@ -2,29 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using MusicNation.Data.Interfaces;
 using MusicNation.Models;
 using MusicNation.Models.Database;
 
 namespace MusicNation.Data.Mocks
 {
-    public class MockSongs : ISongs
+    public class MockArtists : IArtists
     {
         private readonly MusicContext dbContext;
 
-        public MockSongs(MusicContext context)
+        public MockArtists(MusicContext context)
         {
             dbContext = context;
         }
 
-        public IEnumerable<Song> GetAllSongs() => dbContext.Songs;
+        public IEnumerable<Artist> GetAllArtists() => dbContext.Artists;
 
-        public async Task<bool> AddSong(Song song)
+        public async Task<bool> AddArtist(Artist artist)
         {
             try
             {
-                await dbContext.Songs.AddAsync(song);
+                await dbContext.Artists.AddAsync(artist);
                 await dbContext.SaveChangesAsync();
             }
             catch (Exception e)

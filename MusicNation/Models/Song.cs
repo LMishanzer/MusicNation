@@ -20,11 +20,12 @@ namespace MusicNation.Models
 
         public Song() { }
 
-        public Song(string name, Album album)
+        public Song(string name, Album album, string idOnDrive)
         {
             Name = name;
             Album = album;
             AlbumId = album.Id;
+            IdOnDrive = idOnDrive;
             Id = counter++;
         }
     }

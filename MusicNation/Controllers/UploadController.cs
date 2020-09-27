@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MusicNation.Data.Interfaces;
@@ -12,15 +9,18 @@ namespace MusicNation.Controllers
 {
     public class UploadController : Controller
     {
-        private readonly ISongs songs;
-        private readonly DriveSession session;
+        private readonly ISongs _songs;
+        private readonly IAlbums _albums;
+        private readonly IArtists _artists;
+        private readonly DriveSession _session;
 
-        public UploadController(ISongs songs)
+        public UploadController(ISongs songs, IAlbums albums, IArtists artists)
         {
-            this.songs = songs;
-            session = new DriveSession();
+            _songs = songs;
+            _albums = albums;
+            _artists = artists;
+            _session = new DriveSession();
         }
-
 
         public IActionResult Index()
         {
@@ -37,7 +37,15 @@ namespace MusicNation.Controllers
 
                 if (stream.Length < 20971520)
                 {
-                    await session.Upload(stream, post.Name);
+                    await _session.Upload(stream, post.Name);
+
+                    var artist = new Artist(post.Artist);
+                    var album = new Album(post.Album, post.Year, artist);
+                    var song = new Song(post.Name, album, _session.GetFileId(post.Name));
+
+                    await _artists.AddArtist(artist);
+                    await _albums.AddAlbum(album);
+                    await _songs.AddSong(song);
                 }
                 else
                 {

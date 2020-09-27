@@ -11,24 +11,28 @@ namespace MusicNation.Controllers
 {
     public class SongsController : Controller
     {
-        private readonly ISongs songs;
-        private readonly DriveSession session;
+        private readonly ISongs _songs;
+        private readonly IAlbums _albums;
+        private readonly IArtists _artists;
+        private readonly DriveSession _session;
 
-        public SongsController(ISongs songs)
+        public SongsController(ISongs songs, IAlbums albums, IArtists artists)
         {
-            this.songs = songs;
-            session = new DriveSession();
+            _songs = songs;
+            _albums = albums;
+            _artists = artists;
+            _session = new DriveSession();
         }
 
         public ViewResult List()
         {
-            var songs = this.songs.GetAllSongs();
+            var songs = _songs.GetAllSongs();
             return View(songs);
         }
 
         public async Task<IActionResult> Download(string button)
         {
-            var stream = await session.Download(button);
+            var stream = await _session.Download(button);
 
             var contentType = "audio/mpeg";
             var fileName = $"{button}.mp3";

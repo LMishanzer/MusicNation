@@ -6,8 +6,10 @@ using MusicNation.Models;
 
 namespace MusicNation.Data.Interfaces
 {
-    interface IArtists
+    public interface IArtists
     {
         IEnumerable<Artist> GetAllArtists();
+
+        Task<bool> AddArtist(Artist artist);
     }
 }

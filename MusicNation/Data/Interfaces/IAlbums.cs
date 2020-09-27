@@ -6,8 +6,10 @@ using MusicNation.Models;
 
 namespace MusicNation.Data.Interfaces
 {
-    interface IAlbums
+    public interface IAlbums
     {
         IEnumerable<Album> GetAllAlbums();
+
+        Task<bool> AddAlbum(Album album);
     }
 }

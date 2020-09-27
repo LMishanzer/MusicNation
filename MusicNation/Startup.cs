@@ -42,7 +42,8 @@ namespace MusicNation
                 options.UseSqlServer(connection));
             services.AddControllersWithViews();
             services.AddTransient<ISongs, MockSongs>();
-
+            services.AddTransient<IAlbums, MockAlbums>();
+            services.AddTransient<IArtists, MockArtists>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

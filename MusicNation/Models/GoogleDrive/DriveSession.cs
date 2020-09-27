@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
@@ -59,14 +60,13 @@ namespace MusicNation.Models.GoogleDrive
             IsAuthorized = true;
         }
 
-        public List<string> GetFiles()
+        public List<(string, string)> GetFiles()
         {
             // Define parameters of request.
             FilesResource.ListRequest listRequest = Service.Files.List();
-            listRequest.PageSize = 100;
             listRequest.Fields = "nextPageToken, files(id, name)";
 
-            var result = new List<string>();
+            var result = new List<(string, string)>();
 
             // List files.
             IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
@@ -75,20 +75,31 @@ namespace MusicNation.Models.GoogleDrive
             {
                 foreach (var file in files)
                 {
-                    result.Add(file.Name);
+                    result.Add((file.Name, file.DriveId));
                 }
             }
 
             return result;
         }
 
+        public string GetFileId(string name)
+        {
+            // Define parameters of request.
+            FilesResource.ListRequest listRequest = Service.Files.List();
+            listRequest.Fields = "nextPageToken, files(id, name)";
+
+            // List files.
+            IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
+                .Files;
+
+            return files.First(e => e.Name == name).Id;
+        }
+
         public async Task<IActionResult> Upload(MemoryStream stream, string filename)
         {
             var fileMetadata = new Google.Apis.Drive.v3.Data.File {Name = filename, MimeType = "audio/mpeg"};
 
-            FilesResource.CreateMediaUpload request;
-
-            request = Service.Files.Create(fileMetadata, stream, fileMetadata.MimeType);
+            var request = Service.Files.Create(fileMetadata, stream, fileMetadata.MimeType);
             request.Fields = "id";
             await request.UploadAsync();
 
