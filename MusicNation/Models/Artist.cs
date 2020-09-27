@@ -8,7 +8,7 @@ namespace MusicNation.Models
 {
     public class Artist
     {
-        private static int counter = 0;
+        private static int _counter;
 
         public int Id { get; set; }
         [Required]
@@ -20,7 +20,7 @@ namespace MusicNation.Models
         public Artist(string name)
         {
             Name = name;
-            Id = counter++;
+            Id = _counter++;
         }
     }
 }

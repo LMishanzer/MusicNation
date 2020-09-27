@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200927225555_Renaming.cs" />
+    <Compile Remove="Migrations\20200927225555_Renaming.Designer.cs" />
+    <Compile Remove="Migrations\20200927225947_Renaming1.cs" />
+    <Compile Remove="Migrations\20200927225947_Renaming1.Designer.cs" />
+    <Compile Remove="Migrations\20200927230752_Renaming.cs" />
+    <Compile Remove="Migrations\20200927230752_Renaming.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Pages\Songs\" />
   </ItemGroup>
 

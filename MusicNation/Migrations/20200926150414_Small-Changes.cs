@@ -7,7 +7,7 @@ namespace MusicNation.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
+                name: "Title",
                 table: "Songs",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -15,7 +15,7 @@ namespace MusicNation.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
+                name: "Title",
                 table: "Artists",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -30,7 +30,7 @@ namespace MusicNation.Migrations
                 oldType: "int");
 
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
+                name: "Title",
                 table: "Albums",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -41,14 +41,14 @@ namespace MusicNation.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
+                name: "Title",
                 table: "Songs",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string));
 
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
+                name: "Title",
                 table: "Artists",
                 type: "nvarchar(max)",
                 nullable: true,
@@ -63,7 +63,7 @@ namespace MusicNation.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "Name",
+                name: "Title",
                 table: "Albums",
                 type: "nvarchar(max)",
                 nullable: true,

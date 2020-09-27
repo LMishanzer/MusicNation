@@ -1,18 +1,36 @@
 ﻿@using MusicNation.Models
-@model IEnumerable<Song>
+@model IEnumerable<SongAllInfo>
 
 <div class="container">
-    @{
-        foreach (var song in Model)
-        {
-            <div class="col-md-3">
-                <h2>@song.Name</h2>
-                <form enctype="multipart/form-data" method="post">
-                    <button name="button" value="@song.IdOnDrive" asp-action="Download">Download</button>
-                </form>
-            </div>
-        }
-    }
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr class="active">
+                <th>Song title</th>
+                <th>Album</th>
+                <th>Artist</th>
+                <th>Year</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var song in Model)
+                {
+                        <tr>
+                            <th>@song.Title</th>
+                            <th>@song.AlbumTitle</th>
+                            <th>@song.Artist</th>
+                            <th>@song.Year</th>
+                            <th>
+                                <form enctype="multipart/form-data" method="post">
+                                    <button name="button" value="@song.IdOnDrive" asp-action="Download">Download</button>
+                                </form>
+                            </th>
+                        </tr>
+                }
+            }
+        </tbody>
+    </table>
 </div>
 <div>
     <form>

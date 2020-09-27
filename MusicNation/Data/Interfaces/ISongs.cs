@@ -8,7 +8,7 @@ namespace MusicNation.Data.Interfaces
 {
     public interface ISongs
     {
-        IEnumerable<Song> GetAllSongs();
+        IEnumerable<SongAllInfo> GetAllSongs();
 
         Task<bool> AddSong(Song song);
     }

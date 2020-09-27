@@ -8,11 +8,11 @@ namespace MusicNation.Models
 {
     public class Song
     {
-        private static int counter = 0;
+        private static int _counter;
 
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string Title { get; set; }
         public int AlbumId { get; set; }
         public Album Album { get; set; }
         [Required(AllowEmptyStrings = false)]
@@ -20,13 +20,13 @@ namespace MusicNation.Models
 
         public Song() { }
 
-        public Song(string name, Album album, string idOnDrive)
+        public Song(string title, Album album, string idOnDrive)
         {
-            Name = name;
+            Title = title;
             Album = album;
             AlbumId = album.Id;
             IdOnDrive = idOnDrive;
-            Id = counter++;
+            Id = _counter++;
         }
     }
 }
