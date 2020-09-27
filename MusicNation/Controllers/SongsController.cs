@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -27,13 +28,12 @@ namespace MusicNation.Controllers
 
         public async Task<IActionResult> Download(string button)
         {
-            var net = new System.Net.WebClient();
-            var content = await session.Download(button);
+            var stream = await session.Download(button);
+
             var contentType = "audio/mpeg";
             var fileName = $"{button}.mp3";
 
-            var file = File(content, contentType, fileName);
-            content.Close();
+            var file = File(stream, contentType, fileName);
 
             return file;
         }

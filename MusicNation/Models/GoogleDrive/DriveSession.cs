@@ -17,8 +17,8 @@ namespace MusicNation.Models.GoogleDrive
     {
         // If modifying these scopes, delete your previously saved credentials
         // at ~/.credentials/drive-dotnet-quickstart.json
-        static string[] Scopes = { DriveService.Scope.Drive };
-        static string ApplicationName = "Music Nation";
+        static readonly string[] Scopes = { DriveService.Scope.Drive };
+        static readonly string ApplicationName = "Music Nation";
 
         private UserCredential Credential { get; set; }
         private DriveService Service { get; set; }
@@ -84,9 +84,7 @@ namespace MusicNation.Models.GoogleDrive
 
         public async Task<IActionResult> Upload(MemoryStream stream, string filename)
         {
-            var fileMetadata = new Google.Apis.Drive.v3.Data.File();
-            fileMetadata.Name = filename;
-            fileMetadata.MimeType = "audio/mpeg";
+            var fileMetadata = new Google.Apis.Drive.v3.Data.File {Name = filename, MimeType = "audio/mpeg"};
 
             FilesResource.CreateMediaUpload request;
 
@@ -99,9 +97,12 @@ namespace MusicNation.Models.GoogleDrive
 
         public async Task<MemoryStream> Download(string id)
         {
+            var path = $"C:\\Users\\Mike\\source\\repos\\MusicNation\\{id}.mp3";
+
             var stream = new MemoryStream();
-            
+
             await Service.Files.Get(id).DownloadAsync(stream);
+            stream.Seek(0, SeekOrigin.Begin);
 
             return stream;
         }
