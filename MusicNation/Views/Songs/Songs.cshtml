@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Song>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<div>
+    <h3>@ViewData["artist"] albums</h3>
+    <h4>@ViewData["album"]</h4>
+    <hr />
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+        </thead>
+        @foreach (var song in Model)
+        {
+            <tr>
+                <th>@song.Title</th>
+            </tr>
+        }
+    </table>
+</div>

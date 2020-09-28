@@ -10,21 +10,23 @@ namespace MusicNation.Data.Mocks
 {
     public class MockArtists : IArtists
     {
-        private readonly MusicContext dbContext;
+        private readonly MusicContext _dbContext;
 
         public MockArtists(MusicContext context)
         {
-            dbContext = context;
+            _dbContext = context;
         }
 
-        public IEnumerable<Artist> GetAllArtists() => dbContext.Artists;
+        public IEnumerable<Artist> GetAllArtists() => _dbContext.Artists;
+
+        public Artist GetArtist(int id) => _dbContext.Artists.Single(artist => artist.Id == id);
 
         public async Task<bool> AddArtist(Artist artist)
         {
             try
             {
-                await dbContext.Artists.AddAsync(artist);
-                await dbContext.SaveChangesAsync();
+                await _dbContext.Artists.AddAsync(artist);
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception e)
             {

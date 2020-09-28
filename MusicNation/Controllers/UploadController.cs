@@ -45,7 +45,7 @@ namespace MusicNation.Controllers
             if (ModelState.IsValid)
             {
                 await using var stream = new MemoryStream();
-                await post.Song.CopyToAsync(stream);
+                if (post.Song != null) await post.Song.CopyToAsync(stream);
 
                 await _session.Upload(stream, post.Title);
 

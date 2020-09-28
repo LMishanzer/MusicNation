@@ -24,14 +24,12 @@ namespace MusicNation
 {
     public class Startup
     {
-        private IConfigurationRoot configurationString;
+        private readonly IConfigurationRoot configurationString;
 
         public Startup(IWebHostEnvironment hostEnv)
         {
             configurationString = new ConfigurationBuilder().SetBasePath(hostEnv.ContentRootPath).AddJsonFile("dbsettings.json").Build();
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)

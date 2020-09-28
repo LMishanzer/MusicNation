@@ -10,6 +10,8 @@ namespace MusicNation.Data.Interfaces
     {
         IEnumerable<Artist> GetAllArtists();
 
+        Artist GetArtist(int id);
+
         Task<bool> AddArtist(Artist artist);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using MusicNation.Data.Interfaces;
 using MusicNation.Models;
 using MusicNation.Models.Database;
@@ -55,6 +56,27 @@ namespace MusicNation.Data.Mocks
                 );
 
             return wholeSongs;
+        }
+
+        public IEnumerable<Song> GetSongsByAlbum(int albumId) =>
+            _dbContext.Songs.Where(song => song.AlbumId == albumId);
+
+        public IEnumerable<Song> GetSongsByArtist(int artistId)
+        {
+            var albums = _dbContext.Albums.Where(album => album.ArtistId == artistId);
+            var songs = _dbContext.Songs
+                .Join(
+                    albums,
+                    song => song.AlbumId,
+                    album => album.Id,
+                    (song, album) => new Song(
+                        song.Title,
+                        album,
+                        song.IdOnDrive
+                    )
+                );
+
+            return songs;
         }
 
         public async Task<bool> AddSong(Song song)

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Artist>
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<div>
+    <h4>Artist</h4>
+    <hr />
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        @foreach (var artist in Model)
+        {
+            <tr>
+                <th><a asp-controller="Songs" asp-action="Albums" asp-route-artistId="@artist.Id">@artist.Name</a></th>
+            </tr>
+        }
+    </table>
+</div>

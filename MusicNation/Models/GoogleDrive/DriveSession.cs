@@ -97,6 +97,7 @@ namespace MusicNation.Models.GoogleDrive
 
         public async Task<IActionResult> Upload(MemoryStream stream, string filename)
         {
+            //TODO: modify
             var fileMetadata = new Google.Apis.Drive.v3.Data.File {Name = filename, MimeType = "audio/mpeg"};
 
             var request = Service.Files.Create(fileMetadata, stream, fileMetadata.MimeType);
