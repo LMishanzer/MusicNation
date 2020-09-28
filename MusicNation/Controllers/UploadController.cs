@@ -29,28 +29,33 @@ namespace MusicNation.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upload(CreatePost post)
         {
-            await using (var stream = new MemoryStream())
+            if (post.Song?.Length > 20971520)
             {
+                ModelState.AddModelError("Song", "The file is too large");
+            }
+
+            if (post.Song?.ContentType != "audio/mpeg")
+            {
+                ModelState.AddModelError("Song", "The file is not song");
+            }
+
+            if (ModelState.IsValid)
+            {
+                await using var stream = new MemoryStream();
                 await post.Song.CopyToAsync(stream);
 
-                if (stream.Length < 20971520)
-                {
-                    await _session.Upload(stream, post.Name);
+                await _session.Upload(stream, post.Title);
 
-                    var artist = new Artist(post.Artist);
-                    var album = new Album(post.Album, post.Year, artist);
-                    var song = new Song(post.Name, album, _session.GetFileId(post.Name));
+                var artist = new Artist(post.Artist);
+                var album = new Album(post.Album, post.Year, artist);
+                var song = new Song(post.Title, album, _session.GetFileId(post.Title));
 
-                    await _artists.AddArtist(artist);
-                    await _albums.AddAlbum(album);
-                    await _songs.AddSong(song);
-                }
-                else
-                {
-                    ModelState.AddModelError("File.", "The file is too large");
-                }
+                await _artists.AddArtist(artist);
+                await _albums.AddAlbum(album);
+                await _songs.AddSong(song);
             }
 
             return View("Index");

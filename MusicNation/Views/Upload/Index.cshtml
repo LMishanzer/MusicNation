@@ -1,14 +1,54 @@
-﻿@model CreatePost
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model MusicNation.Models.CreatePost
+
+@{
+    ViewData["Title"] = "Upload";
+}
+
+<h1>Upload</h1>
+
+<h4>CreatePost</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Upload" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Artist" class="control-label"></label>
+                <input asp-for="Artist" class="form-control" />
+                <span asp-validation-for="Artist" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Album" class="control-label"></label>
+                <input asp-for="Album" class="form-control" />
+                <span asp-validation-for="Album" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Song" class="control-label"></label>
+                <input asp-for="Song" class="form-control" />
+                <span asp-validation-for="Song" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
 
 <div>
-    <form asp-action="Upload" enctype="multipart/form-data">
-
-        <input asp-for="Name" /> <br />
-        <input asp-for="Artist" /> <br />
-        <input asp-for="Album" /> <br />
-        <input asp-for="Year" /> <br />
-        <input asp-for="Song" /> <br />
-
-        <input type="submit" />
-    </form>
+    <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
